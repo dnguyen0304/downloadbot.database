@@ -38,8 +38,8 @@ class Persistence(Event):
 
         Parameters
         ----------
-        event_parser : downloadbot.services.database.parsers.S3ObjectCreatedEvent
-        db_context : downloadbot.services.database.contexts.Context
+        event_parser : downloadbot_database.parsers.S3ObjectCreatedEvent
+        db_context : downloadbot_database.contexts.Context
         """
 
         self._event_parser = event_parser
@@ -74,7 +74,7 @@ class Logging(Event):
 
         Parameters
         ----------
-        event_handler : downloadbot.services.database.handlers.Event
+        event_handler : downloadbot_database.handlers.Event
         logger : logging.Logger
         """
 

@@ -9,7 +9,7 @@ import sqlalchemy
 import sqlalchemy.exc
 
 from . import topics
-from downloadbot.common import messaging
+from downloadbot_common import messaging
 
 _SID_LENGTH = 32
 _SID_CHARACTERS = string.ascii_letters + string.digits
@@ -25,7 +25,7 @@ class Context(metaclass=abc.ABCMeta):
 
         Parameters
         ----------
-        model : downloadbot.services.database.models.Model
+        model : downloadbot_database.models.Model
 
         Returns
         -------
@@ -118,7 +118,7 @@ class SidDefaulting(Context):
 
         Parameters
         ----------
-        db_context : downloadbot.services.database.contexts.Context
+        db_context : downloadbot_database.contexts.Context
         """
 
         self._db_context = db_context
@@ -170,7 +170,7 @@ class MetadataDefaulting(Context):
 
         Parameters
         ----------
-        db_context : downloadbot.services.database.contexts.Context
+        db_context : downloadbot_database.contexts.Context
         """
 
         self._db_context = db_context
@@ -205,7 +205,7 @@ class Logging(Context):
 
         Parameters
         ----------
-        db_context : downloadbot.services.database.contexts.Context
+        db_context : downloadbot_database.contexts.Context
         logger : logging.Logger
         """
 
