@@ -2,7 +2,7 @@
 
 import abc
 
-from . import models
+from downloadbot_database import models
 
 
 class Event(metaclass=abc.ABCMeta):

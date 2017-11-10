@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from sqlalchemy import Column
+
 from nose.tools import (assert_equal,
                         assert_is_instance,
                         assert_is_none,
                         assert_is_not_none,
                         assert_true,
                         raises)
-from sqlalchemy import Column
 
 from .. import contexts
 from .. import models

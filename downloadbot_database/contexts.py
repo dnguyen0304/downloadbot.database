@@ -7,9 +7,9 @@ import string
 
 import sqlalchemy
 import sqlalchemy.exc
-
-from . import topics
 from downloadbot_common import messaging
+
+from downloadbot_database import topics
 
 _SID_LENGTH = 32
 _SID_CHARACTERS = string.ascii_letters + string.digits

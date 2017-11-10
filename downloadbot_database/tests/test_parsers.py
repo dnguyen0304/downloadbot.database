@@ -2,7 +2,7 @@
 
 from nose.tools import assert_equal, assert_in, raises
 
-from .. import parsers
+from downloadbot_database import parsers
 
 
 class TestS3ObjectCreatedEvent:
