@@ -1,40 +1,42 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import Column
-from sqlalchemy.ext.declarative import as_declarative
+import abc
 
 
-@as_declarative()
-class Model:
-
-    """
-    Attributes
-    ----------
-    created_at : datetime.datetime
-        When the entity was originally created.
-    created_by : int
-        Who originally created the entity.
-    updated_at : datetime.datetime
-        When the entity was last updated.
-    updated_by : int
-        Who last updated the entity.
-    """
-
-    created_at = Column()
-    created_by = Column()
-    updated_at = Column()
-    updated_by = Column()
+class Model(metaclass=abc.ABCMeta):
+    pass
 
 
-class Replay(Model):
+class Base(Model):
 
-    __tablename__ = 'replays'
+    def __init__(self,
+                 created_at=None,
+                 created_by=0,
+                 updated_at=None,
+                 updated_by=0):
 
-    replays_id = Column(primary_key=True)
-    replays_sid = Column()
-    name = Column()
+        """
+        Parameters
+        ----------
+        created_at : datetime.datetime
+            When the entity was originally created. Defaults to None.
+        created_by : int
+            Who originally created the entity. Defaults to 0.
+        updated_at : datetime.datetime
+            When the entity was last updated. Defaults to None.
+        updated_by : int
+            Who last updated the entity. Defaults to 0.
+        """
 
-    def __init__(self, name):
+        self.created_at = created_at
+        self.created_by = created_by
+        self.updated_at = updated_at
+        self.updated_by = updated_by
+
+
+class Replay(Base):
+
+    def __init__(self, name, replays_id=0, replays_sid=""):
 
         """
         Replay model.
@@ -42,10 +44,21 @@ class Replay(Model):
         Parameters
         ----------
         name : str
+        replays_id : int
+            Private unique identifier. This field should not be used
+            externally. Defaults to 0.
+        replays_sid : str
+            Unique identifier. Defaults to "".
         """
 
+        super().__init__()
+        self.replays_id = replays_id
+        self.replays_sid = replays_sid
         self.name = name
 
     def __repr__(self):
-        repr_ = '<{}(name="{}")>'
-        return repr_.format(self.__class__.__name__, self.name)
+        repr_ = '<{}(replays_id={}, replays_sid="{}", name="{}")>'
+        return repr_.format(self.__class__.__name__,
+                            self.replays_id,
+                            self.replays_sid,
+                            self.name)
