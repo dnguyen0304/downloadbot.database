@@ -31,7 +31,7 @@ class Event(metaclass=abc.ABCMeta):
 
 class Persistence(Event):
 
-    def __init__(self, event_parser, db_context):
+    def __init__(self, event_parser, context):
 
         """
         Handler that writes to persistent storage.
@@ -39,11 +39,11 @@ class Persistence(Event):
         Parameters
         ----------
         event_parser : downloadbot_cache.parsers.S3ObjectCreatedEvent
-        db_context : downloadbot_cache.contexts.Context
+        context : downloadbot_cache.contexts.Context
         """
 
         self._event_parser = event_parser
-        self._db_context = db_context
+        self._context = context
 
     def handle(self, event):
         try:
@@ -55,14 +55,14 @@ class Persistence(Event):
             model = models.Replay(**kwargs)
         except TypeError:
             return
-        self._db_context.add(model=model)
-        self._db_context.commit()
+        self._context.add(model=model)
+        self._context.commit()
 
     def __repr__(self):
-        repr_ = '<{}(event_parser={}, db_context={})>'
+        repr_ = '<{}(event_parser={}, context={})>'
         return repr_.format(self.__class__.__name__,
                             self._event_parser,
-                            self._db_context)
+                            self._context)
 
 
 class Logging(Event):

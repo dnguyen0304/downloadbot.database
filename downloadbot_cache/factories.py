@@ -98,21 +98,21 @@ class EventHandler:
             session_factory=session_factory)
         session = session_factory()
 
-        # Create the DB context.
-        db_context = contexts.SqlAlchemy(session=session)
+        # Create the context.
+        context = contexts.SqlAlchemy(session=session)
 
         # Include default values for SID fields.
-        db_context = contexts.SidDefaulting(db_context=db_context)
+        context = contexts.SidDefaulting(db_context=context)
 
         # Include default values for metadata fields.
-        db_context = contexts.MetadataDefaulting(db_context=db_context)
+        context = contexts.MetadataDefaulting(db_context=context)
 
         # Include logging.
-        db_context = contexts.Logging(db_context=db_context, logger=logger)
+        context = contexts.Logging(db_context=context, logger=logger)
 
         # Create the event handler.
         event_handler = handlers.Persistence(event_parser=event_parser,
-                                             db_context=db_context)
+                                             context=context)
         # Include logging.
         event_handler = handlers.Logging(event_handler=event_handler,
                                          logger=logger)
