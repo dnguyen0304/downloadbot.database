@@ -2,7 +2,7 @@
 
 from downloadbot_common import utility
 
-from downloadbot_database import factories
+from downloadbot_cache import factories
 
 
 def lambda_handler(event, context):

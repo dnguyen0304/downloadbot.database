@@ -4,7 +4,7 @@
 import setuptools
 
 if __name__ == '__main__':
-    package_name = 'downloadbot_database'
+    package_name = 'downloadbot_cache'
 
     description = 'An event handler that writes to persistent storage.'
 
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     setuptools.setup(name=package_name,
                      version='0.1.0',
                      description=description,
-                     url='https://github.com/dnguyen0304/downloadbot.database.git',
+                     url='https://github.com/dnguyen0304/downloadbot_cache.git',
                      author='Duy Nguyen',
                      author_email='dnguyen0304@gmail.com',
                      license='MIT',

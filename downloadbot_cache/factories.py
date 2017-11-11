@@ -67,7 +67,7 @@ class EventHandler:
         """
         Returns
         -------
-        downloadbot_database.handlers.Event
+        downloadbot_cache.handlers.Event
 
         Raises
         ------

@@ -2,7 +2,7 @@
 
 import abc
 
-from downloadbot_database import models
+from . import models
 
 
 class Event(metaclass=abc.ABCMeta):
@@ -38,8 +38,8 @@ class Persistence(Event):
 
         Parameters
         ----------
-        event_parser : downloadbot_database.parsers.S3ObjectCreatedEvent
-        db_context : downloadbot_database.contexts.Context
+        event_parser : downloadbot_cache.parsers.S3ObjectCreatedEvent
+        db_context : downloadbot_cache.contexts.Context
         """
 
         self._event_parser = event_parser
@@ -74,7 +74,7 @@ class Logging(Event):
 
         Parameters
         ----------
-        event_handler : downloadbot_database.handlers.Event
+        event_handler : downloadbot_cache.handlers.Event
         logger : logging.Logger
         """
 
