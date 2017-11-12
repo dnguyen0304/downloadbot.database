@@ -84,6 +84,7 @@ class Redis(Replay):
         model.replays_id = int(next_replay_id)
         mapping = self._marshaller.marshall(source=model)
         try:
+            # Should this also maintain an index of all replays?
             self._client.hmset('replays:' + next_replay_id, mapping=mapping)
         except redis.DataError:
             # An expected case has occurred. The map contains no items.
