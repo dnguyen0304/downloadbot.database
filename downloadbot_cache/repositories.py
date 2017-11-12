@@ -164,3 +164,29 @@ def _set_metadata(entity, by, _time_zone_name=_TIME_ZONE_NAME):
     else:
         entity.updated_at = timestamp
         entity.updated_by = by
+
+
+class MetadataDefaulting(Repository):
+
+    _BY = -1
+
+    def __init__(self, repository, _set_metadata=_set_metadata):
+
+        """
+        Component to include default values for metadata fields.
+
+        Parameters
+        ----------
+        repository : downloadbot_cache.repositories.Repository
+        """
+
+        self._repository = repository
+        self._set_metadata = _set_metadata
+
+    def add(self, model):
+        self._set_metadata(entity=model, by=self._BY)
+        self._repository.add(model=model)
+
+    def __repr__(self):
+        repr_ = '{}(repository={})'
+        return repr_.format(self.__class__.__name__, self._repository)
