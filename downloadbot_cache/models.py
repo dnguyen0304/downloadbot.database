@@ -7,8 +7,9 @@ class Model(metaclass=abc.ABCMeta):
     pass
 
 
-class Base(Model):
+class Base(Model, metaclass=abc.ABCMeta):
 
+    @abc.abstractmethod
     def __init__(self,
                  created_at=None,
                  created_by=0,
