@@ -115,7 +115,7 @@ def _set_sid(model, sid):
     try:
         attribute = next(result)
     except StopIteration:
-        template = 'An SID attribute was not found on the model {}.'
+        template = 'An SID attribute was not found on the model <{}>.'
         raise AttributeError(template.format(model))
 
     setattr(model, attribute, sid)

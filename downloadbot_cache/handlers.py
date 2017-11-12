@@ -81,7 +81,7 @@ class Logging(Event):
         self._logger = logger
 
     def handle(self, event):
-        template = 'The event handler {} was invoked by the event {}.'
+        template = 'The event handler <{}> was invoked by the event <{}>.'
         self._logger.debug(msg=template.format(self._event_handler, event))
         self._event_handler.handle(event=event)
 
