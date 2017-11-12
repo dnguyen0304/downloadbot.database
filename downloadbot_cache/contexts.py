@@ -1,36 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import random
-import string
 
 from downloadbot_common import messaging
 
 from . import topics
 
-_SID_LENGTH = 32
-_SID_CHARACTERS = string.ascii_letters + string.digits
 
-
-def _generate_sid(characters=_SID_CHARACTERS, length=_SID_LENGTH):
-
-    sid = ''.join(random.SystemRandom().choice(characters)
-                  for _
-                  in range(length))
-    return sid
-
-
-def _set_sid(model, sid):
-
-    result = filter(lambda x: not x.startswith('_') and x.endswith('_sid'),
-                    dir(model))
-    try:
-        attribute = next(result)
-    except StopIteration:
-        template = 'An SID attribute was not found on the model {}.'
-        raise AttributeError(template.format(model))
-
-    setattr(model, attribute, sid)
 
 
 class SidDefaulting(Context):
