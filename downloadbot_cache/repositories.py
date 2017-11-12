@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import abc
+import datetime
 import random
 import string
 
 import redis
+from downloadbot_common import utility
 
+_TIME_ZONE_NAME = 'UTC'
 _SID_LENGTH = 32
 _SID_CHARACTERS = string.ascii_letters + string.digits
 
@@ -98,3 +101,16 @@ def _set_sid(model, sid):
         raise AttributeError(template.format(model))
 
     setattr(model, attribute, sid)
+
+
+def _set_metadata(entity, by, _time_zone_name=_TIME_ZONE_NAME):
+
+    time_zone = utility.TimeZone.from_name(_time_zone_name)
+    timestamp = datetime.datetime.utcnow().replace(tzinfo=time_zone)
+
+    if not entity.created_at and not entity.created_by:
+        entity.created_at = timestamp
+        entity.created_by = by
+    else:
+        entity.updated_at = timestamp
+        entity.updated_by = by
