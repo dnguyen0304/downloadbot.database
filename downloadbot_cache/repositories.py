@@ -117,6 +117,41 @@ def _set_sid(model, sid):
     setattr(model, attribute, sid)
 
 
+class SidDefaulting(Repository):
+
+    def __init__(self,
+                 repository,
+                 _generate_sid=_generate_sid,
+                 _set_sid=_set_sid):
+
+        """
+        Component to include default values for SID fields.
+
+        Parameters
+        ----------
+        repository : downloadbot_cache.repositories.Repository
+        """
+
+        self._repository = repository
+        self._generate_sid = _generate_sid
+        self._set_sid = _set_sid
+
+    def add(self, model):
+        # Should this instead be a method on the model?
+        is_new = not model.created_at and not model.created_by
+        if is_new:
+            sid = self._generate_sid()
+            try:
+                self._set_sid(model=model, sid=sid)
+            except AttributeError:
+                pass
+        self._repository.add(model=model)
+
+    def __repr__(self):
+        repr_ = '{}(repository={})'
+        return repr_.format(self.__class__.__name__, self._repository)
+
+
 def _set_metadata(entity, by, _time_zone_name=_TIME_ZONE_NAME):
 
     time_zone = utility.TimeZone.from_name(_time_zone_name)
