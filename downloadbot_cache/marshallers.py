@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import abc
 import collections
 
 
-class ReplayToLinkedHash:
+class ReplayToMap(metaclass=abc.ABCMeta):
 
+    @abc.abstractmethod
     def marshall(self, source):
 
         """
         Marshall the Replay into a map.
-
-        The map implementation is backed by a doubly-linked list. The
-        keys are sorted by insertion ordered.
 
         Parameters
         ----------
@@ -24,6 +23,18 @@ class ReplayToLinkedHash:
         Raises
         ------
         None
+        """
+
+        raise NotImplementedError
+
+
+class ReplayToLinkedHash(ReplayToMap):
+
+    def marshall(self, source):
+
+        """
+        The map implementation is backed by a doubly-linked list. The
+        keys are sorted by insertion ordered.
         """
 
         marshalled = collections.OrderedDict()
