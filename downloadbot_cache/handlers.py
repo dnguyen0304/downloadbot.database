@@ -29,12 +29,12 @@ class Event(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
-class Persistence(Event):
+class Cache(Event):
 
     def __init__(self, event_parser, repository):
 
         """
-        Handler that writes to persistent storage.
+        Handler that writes to cache.
 
         Parameters
         ----------

@@ -101,8 +101,8 @@ class EventHandler:
         repository = repositories.Logging(repository=repository, logger=logger)
 
         # Create the event handler.
-        event_handler = handlers.Persistence(event_parser=event_parser,
-                                             repository=repository)
+        event_handler = handlers.Cache(event_parser=event_parser,
+                                       repository=repository)
         # Include logging.
         event_handler = handlers.Logging(event_handler=event_handler,
                                          logger=logger)
