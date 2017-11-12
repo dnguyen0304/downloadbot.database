@@ -3,12 +3,15 @@
 import collections
 
 
-class ReplayToMap:
+class ReplayToLinkedHash:
 
     def marshall(self, source):
 
         """
         Marshall the Replay into a map.
+
+        The map implementation is backed by a doubly-linked list. The
+        keys are sorted by insertion ordered.
 
         Parameters
         ----------
