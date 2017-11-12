@@ -5,7 +5,7 @@ import abc
 import redis
 
 
-class Repository(metaclass=abc.ABCMeta):
+class Replay(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def add(self, model):
@@ -15,7 +15,7 @@ class Repository(metaclass=abc.ABCMeta):
 
         Parameters
         ----------
-        model : downloadbot_cache.models.Model
+        model : downloadbot_cache.models.Replay
 
         Returns
         -------
@@ -29,7 +29,7 @@ class Repository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
-class Replay(Repository):
+class Redis(Replay):
 
     def __init__(self, client, marshaller):
 
