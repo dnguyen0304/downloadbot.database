@@ -39,7 +39,7 @@ class Persistence(Event):
         Parameters
         ----------
         event_parser : downloadbot_cache.parsers.S3ObjectCreatedEvent
-        repository : downloadbot_cache.repositories.Replay
+        repository : downloadbot_cache.repositories.Repository
         """
 
         self._event_parser = event_parser
