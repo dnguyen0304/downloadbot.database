@@ -58,7 +58,7 @@ class Replay(Base):
         self.name = name
 
     def __repr__(self):
-        repr_ = '<{}(replays_id={}, replays_sid="{}", name="{}")>'
+        repr_ = '{}(replays_id={}, replays_sid="{}", name="{}")'
         return repr_.format(self.__class__.__name__,
                             self.replays_id,
                             self.replays_sid,

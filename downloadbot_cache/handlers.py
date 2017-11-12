@@ -86,7 +86,7 @@ class Logging(Event):
         self._event_handler.handle(event=event)
 
     def __repr__(self):
-        repr_ = '<{}(event_handler={}, logger={})>'
+        repr_ = '{}(event_handler={}, logger={})'
         return repr_.format(self.__class__.__name__,
                             self._event_handler,
                             self._logger)
