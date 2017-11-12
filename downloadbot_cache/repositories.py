@@ -6,7 +6,10 @@ import random
 import string
 
 import redis
+from downloadbot_common import messaging
 from downloadbot_common import utility
+
+from . import topics
 
 _TIME_ZONE_NAME = 'UTC'
 _SID_LENGTH = 32
@@ -190,3 +193,32 @@ class MetadataDefaulting(Repository):
     def __repr__(self):
         repr_ = '{}(repository={})'
         return repr_.format(self.__class__.__name__, self._repository)
+
+
+class Logging(Repository):
+
+    def __init__(self, repository, logger):
+
+        """
+        Component to include logging.
+
+        Parameters
+        ----------
+        repository : downloadbot_cache.repositories.Repository
+        logger : logging.Logger
+        """
+
+        self._repository = repository
+        self._logger = logger
+
+    def add(self, model):
+        self._repository.add(model=model)
+        event = messaging.events.Structured(topic=topics.Topic.ENTITY_ADDED,
+                                            arguments=dict())
+        self._logger.info(msg=event.to_json())
+
+    def __repr__(self):
+        repr_ = '{}(repository={}, logger={})'
+        return repr_.format(self.__class__.__name__,
+                            self._repository,
+                            self._logger)
