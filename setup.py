@@ -6,15 +6,15 @@ import setuptools
 if __name__ == '__main__':
     package_name = 'downloadbot_cache'
 
-    description = 'An event handler that writes to persistent storage.'
+    description = 'An event handler that writes to cache.'
 
     install_requires = [
         # This package is needed by the application layer to implement
         # event sources.
         'downloadbot_common==0.1.0',
         # This package is needed by the application layer to implement
-        # models that synchronize with relationship databases.
-        'sqlalchemy==1.1.15']
+        # repositories that synchronize with caches.
+        'redis==2.10.6']
     dependency_links = [
         'git+https://github.com/dnguyen0304/downloadbot_common.git@v0.1.0#egg=downloadbot_common-0.1.0']
 

@@ -3,13 +3,12 @@
 import logging
 import logging.config
 
-import sqlalchemy
-import sqlalchemy.engine.url
-import sqlalchemy.orm
+import redis
 
-from . import contexts
 from . import handlers
+from . import marshallers
 from . import parsers
+from . import repositories
 
 
 class Logger:
@@ -46,7 +45,7 @@ class Logger:
         return logger
 
     def __repr__(self):
-        repr_ = '<{}(properties={})>'
+        repr_ = '{}(properties={})'
         return repr_.format(self.__class__.__name__, self._properties)
 
 
@@ -82,42 +81,33 @@ class EventHandler:
         # Create the event parser.
         event_parser = parsers.S3ObjectCreatedEvent()
 
-        # Create the session.
-        # See this Stack Overflow answer.
-        # [1] http://stackoverflow.com/a/12223711
-        connection_string = sqlalchemy.engine.url.URL(
-            drivername=self._properties['database']['driver']['name'],
-            host=self._properties['database']['hostname'],
-            port=self._properties['database']['port'],
-            username=self._properties['database']['username'],
-            password=self._properties['database']['password'],
-            database=self._properties['database']['name'])
-        engine = sqlalchemy.create_engine(connection_string)
-        session_factory = sqlalchemy.orm.sessionmaker(bind=engine)
-        session_factory = sqlalchemy.orm.scoped_session(
-            session_factory=session_factory)
-        session = session_factory()
+        # Create the client.
+        client = redis.StrictRedis(host=self._properties['cache']['hostname'],
+                                   port=self._properties['cache']['port'])
 
-        # Create the context.
-        context = contexts.SqlAlchemy(session=session)
+        # Create the marshaller.
+        marshaller = marshallers.ReplayToLinkedHash()
+
+        # Create the repository.
+        repository = repositories.Redis(client=client, marshaller=marshaller)
 
         # Include default values for SID fields.
-        context = contexts.SidDefaulting(db_context=context)
+        repository = repositories.SidDefaulting(repository=repository)
 
         # Include default values for metadata fields.
-        context = contexts.MetadataDefaulting(db_context=context)
+        repository = repositories.MetadataDefaulting(repository=repository)
 
         # Include logging.
-        context = contexts.Logging(db_context=context, logger=logger)
+        repository = repositories.Logging(repository=repository, logger=logger)
 
         # Create the event handler.
         event_handler = handlers.Persistence(event_parser=event_parser,
-                                             context=context)
+                                             repository=repository)
         # Include logging.
         event_handler = handlers.Logging(event_handler=event_handler,
                                          logger=logger)
         return event_handler
 
     def __repr__(self):
-        repr_ = '<{}(properties={})>'
+        repr_ = '{}(properties={})'
         return repr_.format(self.__class__.__name__, self._properties)
