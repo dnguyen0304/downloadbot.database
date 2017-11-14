@@ -1,0 +1,12 @@
+.dockerignore
+Dockerfile
+
+*
+
+!docker
+
+!downloadbot_cache
+!requirements*.txt
+!main.py
+
+!*-latest.zip
