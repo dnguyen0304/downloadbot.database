@@ -27,6 +27,21 @@ sudo docker run \
     dnguyen0304/downloadbot_cache-runtime:<tag>
 ```
 
+### Deploying the application.
+1. Install `docker`.
+2. Install `git`.
+3. Clone the repository.
+```
+git clone https://github.com/dnguyen0304/downloadbot_cache.git
+```
+4. Change the working directory.
+```
+cd downloadbot_cache
+```
+5. Build and configure the application. See the notes in the _Getting Started_ section.
+6. Upload the build artifacts to S3.
+7. Create the Lambda Function.
+
 ### Managing the base buildtime image
 1. Change the working directory to the package root directory.
 2. Build the image.
