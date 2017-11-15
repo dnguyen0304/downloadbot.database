@@ -4,18 +4,12 @@ An event handler that writes to cache.
 NOTE: Remember to replace the <tag> placeholder where applicable.
 
 ## Getting Started
-### Building
-```
-sudo ./build.sh
-```
-
 ### Configuring
 Update the configuration files in the `configuration` directory.
 
-### Pushing
+### Building
 ```
-sudo docker push dnguyen0304/downloadbot_cache-buildtime:<tag>
-sudo docker push dnguyen0304/downloadbot_cache-runtime:<tag>
+sudo ./build.sh
 ```
 
 ## Advanced
