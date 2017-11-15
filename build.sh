@@ -2,7 +2,11 @@
 
 set -eu
 
-for_testing="true"
+if [ "${1:-}" = test ]; then
+    for_testing="true"
+else
+    for_testing="false"
+fi
 
 DOMAIN="dnguyen0304"
 PACKAGE_NAME=$(./scripts/get-package-name.sh)
@@ -58,10 +62,12 @@ docker build \
     --build-arg PACKAGE_NAME=${PACKAGE_NAME} \
     .
 
-docker build \
-    --file docker/runtime/testing/Dockerfile \
-    --tag ${tag} \
-    --build-arg DOMAIN=${DOMAIN} \
-    --build-arg PACKAGE_NAME=${PACKAGE_NAME} \
-    --build-arg BASE_IMAGE_VERSION=${RUNTIME_BASE_IMAGE_VERSION} \
-    .
+if [ "${for_testing}" = true ]; then
+    docker build \
+        --file docker/runtime/testing/Dockerfile \
+        --tag ${tag} \
+        --build-arg DOMAIN=${DOMAIN} \
+        --build-arg PACKAGE_NAME=${PACKAGE_NAME} \
+        --build-arg BASE_IMAGE_VERSION=${RUNTIME_BASE_IMAGE_VERSION} \
+        .
+fi
