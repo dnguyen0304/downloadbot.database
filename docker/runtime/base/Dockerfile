@@ -3,19 +3,28 @@ FROM python:3.5-slim
 MAINTAINER Duy Nguyen <dnguyen0304@gmail.com>
 
 ARG PACKAGE_NAME
+ARG CONFIGURATION_FILE_NAME
 
 # unzip is needed to extract the package.
 ENV BUILDTIME_DEPENDENCIES="unzip"
 
 ARG PACKAGE_DIRECTORY="/opt/${PACKAGE_NAME}"
+ARG CONFIGURATION_DIRECTORY="/etc/opt/${PACKAGE_NAME}"
+
+ENV CONFIGURATION_FILE_PATH="${CONFIGURATION_DIRECTORY}/${CONFIGURATION_FILE_NAME}"
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends ${BUILDTIME_DEPENDENCIES}
 
 RUN useradd ${PACKAGE_NAME}
 
-RUN mkdir ${PACKAGE_DIRECTORY}
+RUN mkdir ${PACKAGE_DIRECTORY} && \
+    mkdir --parent ${CONFIGURATION_DIRECTORY}
 
 WORKDIR ${PACKAGE_DIRECTORY}
 
+RUN chown --recursive ${PACKAGE_NAME}:${PACKAGE_NAME} ${CONFIGURATION_DIRECTORY}
+
 RUN rm -fr /var/lib/apt/lists/*
+
+VOLUME ${CONFIGURATION_DIRECTORY}
