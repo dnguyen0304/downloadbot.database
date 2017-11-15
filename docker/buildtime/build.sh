@@ -5,7 +5,8 @@ set -eu
 PACKAGE_NAME=$1
 SHARED_VOLUME=$2
 VERSION=$3
-FOR_TESTING=$4
+CONFIGURATION_DIRECTORY_NAME=$4
+FOR_TESTING=$5
 
 # Set the build root to the working directory. Now relative references
 # may be used.
@@ -23,6 +24,9 @@ if [ ${FOR_TESTING} = "true" ] && [ -s requirements-testing.txt ]; then
 elif [ -s requirements.txt ]; then
     pip install --requirement requirements.txt --target ${PACKAGE}
 fi
+
+# Include the configuration.
+cp -r ${CONFIGURATION_DIRECTORY_NAME} ${PACKAGE}
 
 # Include the entry point.
 cp main.py ${PACKAGE}

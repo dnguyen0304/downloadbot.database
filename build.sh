@@ -7,6 +7,7 @@ for_testing="true"
 DOMAIN="dnguyen0304"
 PACKAGE_NAME=$(./scripts/get-package-name.sh)
 VERSION=$(./scripts/get-package-version.sh)
+CONFIGURATION_DIRECTORY_NAME=$(./scripts/get-configuration-directory-name.sh)
 REMOTE_SHARED_VOLUME="/tmp/build"
 
 # Clean up existing packages created by previous builds.
@@ -31,6 +32,7 @@ docker build \
     --build-arg PACKAGE_NAME=${PACKAGE_NAME} \
     --build-arg BASE_IMAGE_VERSION=${BUILDTIME_BASE_IMAGE_VERSION} \
     --build-arg PACKAGE_NAME=${PACKAGE_NAME} \
+    --build-arg CONFIGURATION_DIRECTORY_NAME=${CONFIGURATION_DIRECTORY_NAME} \
     .
 
 # Create the package.
@@ -38,7 +40,7 @@ docker run \
     --rm \
     --volume $(pwd):${REMOTE_SHARED_VOLUME} \
     ${tag} \
-    ${PACKAGE_NAME} ${REMOTE_SHARED_VOLUME} ${VERSION} ${for_testing}
+    ${PACKAGE_NAME} ${REMOTE_SHARED_VOLUME} ${VERSION} ${CONFIGURATION_DIRECTORY_NAME} ${for_testing}
 
 # Create the runtime image.
 RUNTIME_BASE_IMAGE_VERSION="0.1.0"

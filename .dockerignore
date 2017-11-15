@@ -6,6 +6,7 @@ Dockerfile
 !docker
 
 !downloadbot_cache
+!configuration
 !requirements*.txt
 !main.py
 
