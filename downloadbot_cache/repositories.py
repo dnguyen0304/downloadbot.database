@@ -215,7 +215,7 @@ class Logging(Repository):
     def add(self, model):
         self._repository.add(model=model)
         event = messaging.events.Structured(topic=topics.Topic.ENTITY_ADDED,
-                                            arguments=dict())
+                                            arguments={'entity': str(model)})
         self._logger.info(msg=event.to_json())
 
     def __repr__(self):
