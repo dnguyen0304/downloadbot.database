@@ -8,7 +8,7 @@ ARG BUILD_DIRECTORY="/tmp/.build"
 
 # build-essential is needed to compile C source code.
 # zip is needed to archive the package.
-# git is needed to download the downloadbot_common repository.
+# git is needed by downloadbot_common to download the repository.
 ARG DEPENDENCIES="build-essential zip git"
 
 RUN apt-get update -y && \
