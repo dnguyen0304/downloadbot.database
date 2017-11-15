@@ -91,11 +91,14 @@ class EventHandler:
         # Create the repository.
         repository = repositories.Redis(client=client, marshaller=marshaller)
 
-        # Include default values for SID fields.
-        repository = repositories.SidDefaulting(repository=repository)
-
         # Include default values for metadata fields.
         repository = repositories.MetadataDefaulting(repository=repository)
+
+        # Include default values for SID fields.
+        # This must be included after the MetadataDefaulting Repository.
+        # Otherwise, the model will appear to be an existing rather than new
+        # one because its properties have been updated.
+        repository = repositories.SidDefaulting(repository=repository)
 
         # Include logging.
         repository = repositories.Logging(repository=repository, logger=logger)
