@@ -84,11 +84,12 @@ class Redis(Replay):
 
         # This operation is atomic.
         next_replay_id = self._client.incr('replays:id:next')
-        model.replays_id = int(next_replay_id)
+        model.replays_id = next_replay_id
         mapping = self._marshaller.marshall(source=model)
         try:
             # Should this also maintain an index of all replays?
-            self._client.hmset('replays:' + next_replay_id, mapping=mapping)
+            self._client.hmset('replays:' + str(next_replay_id),
+                               mapping=mapping)
         except redis.DataError:
             # An expected case has occurred. The map contains no items.
             pass
