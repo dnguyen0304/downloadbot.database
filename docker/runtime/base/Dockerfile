@@ -6,20 +6,22 @@ ARG PACKAGE_NAME
 ARG CONFIGURATION_DIRECTORY_NAME
 ARG CONFIGURATION_FILE_NAME
 
+ARG aws_lambda_directory="/var/task"
+
 # unzip is needed to extract the package.
 ENV BUILDTIME_DEPENDENCIES="unzip"
 
-ARG PACKAGE_DIRECTORY="/opt/${PACKAGE_NAME}"
-
-# PWD is an environment variable available in the AWS Lambda runtime.
-ENV CONFIGURATION_FILE_PATH="${PWD}/${PACKAGE_NAME}/${CONFIGURATION_DIRECTORY_NAME}/${CONFIGURATION_FILE_NAME}"
+# This is needed by child images.
+ENV PACKAGE_DIRECTORY="${aws_lambda_directory}/${PACKAGE_NAME}"
+# This is needed by the application to find the configuration file.
+ENV CONFIGURATION_FILE_PATH="${PACKAGE_DIRECTORY}/${CONFIGURATION_DIRECTORY_NAME}/${CONFIGURATION_FILE_NAME}"
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends ${BUILDTIME_DEPENDENCIES}
 
 RUN useradd ${PACKAGE_NAME}
 
-RUN mkdir ${PACKAGE_DIRECTORY}
+RUN mkdir --parents ${PACKAGE_DIRECTORY}
 
 WORKDIR ${PACKAGE_DIRECTORY}
 
