@@ -5,4 +5,4 @@ FROM ${DOMAIN}/${PACKAGE_NAME}-runtime:${BASE_IMAGE_VERSION}
 
 MAINTAINER Duy Nguyen <dnguyen0304@gmail.com>
 
-ENTRYPOINT python -c "import nose; nose.main()"
+ENTRYPOINT python -c "import nose; nose.main(argv=['', 'downloadbot_cache'])"
