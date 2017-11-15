@@ -4,6 +4,10 @@ An event handler that writes to cache.
 NOTE: Remember to replace the <tag> placeholder where applicable.
 
 ## Getting Started
+### Building
+```
+sudo ./build.sh
+```
 
 ## Advanced
 ### Testing the application
