@@ -12,6 +12,12 @@ sudo ./build.sh
 ### Configuring
 Update the configuration files in the `configuration` directory.
 
+### Pushing
+```
+sudo docker push dnguyen0304/downloadbot_cache-buildtime:<tag>
+sudo docker push dnguyen0304/downloadbot_cache-runtime:<tag>
+```
+
 ## Advanced
 ### Testing the application
 1. Build the image.
