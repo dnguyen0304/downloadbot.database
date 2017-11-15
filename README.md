@@ -9,6 +9,9 @@ NOTE: Remember to replace the <tag> placeholder where applicable.
 sudo ./build.sh
 ```
 
+### Configuring
+Update the configuration files in the `configuration` directory.
+
 ## Advanced
 ### Testing the application
 1. Build the image.
